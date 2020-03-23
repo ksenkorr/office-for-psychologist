@@ -6,9 +6,8 @@ import javax.persistence.*;
 import java.util.List;
 
 @Data
-@Setter
-@Getter
 @Entity
+@NoArgsConstructor
 @Table(name="users")
 public class User {
 
@@ -41,85 +40,10 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<EmotionalDiary> emotionalDiaries;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getMiddleName() {
-        return middleName;
-    }
-
-    public void setMiddleName(String middleName) {
-        this.middleName = middleName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getNameAcronym() {
-        return nameAcronym;
-    }
-
-    public void setNameAcronym(String nameAcronym) {
-        this.nameAcronym = nameAcronym;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
-    public List<EmotionalDiary> getEmotionalDiaries() {
-        return emotionalDiaries;
-    }
-
-    public void setEmotionalDiaries(List<EmotionalDiary> emotionalDiaries) {
-        this.emotionalDiaries = emotionalDiaries;
-    }
-
     public User(String firstName, String middleName, String lastName, String nameAcronym) {
         this.firstName = firstName;
         this.middleName = middleName;
         this.lastName = lastName;
         this.nameAcronym = nameAcronym;
-    }
-
-    public User() {
     }
 }
