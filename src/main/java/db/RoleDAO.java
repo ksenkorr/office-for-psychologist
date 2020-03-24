@@ -16,7 +16,7 @@ public class RoleDAO {
 
     public Role createRole(String roleName) {
 
-        Role role = new Role("Role-1");
+        Role role = new Role(roleName);
         manager.getTransaction().begin();
         try {
             manager.persist(role);

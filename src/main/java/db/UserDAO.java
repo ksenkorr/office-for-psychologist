@@ -40,19 +40,15 @@ public class UserDAO {
 
     @Nullable
     public List<User> findUsersByRoleName(String roleName) {
-        try {
-            return manager.createQuery("SELECT u FROM User u, Role r WHERE r.roleName =: nameToSearch", User.class)
-                    .setParameter("nameToSearch", roleName)
-                    .getResultList();
-        } catch (NoResultException cause) {
-            return null;
-        }
+        return manager.createQuery("SELECT u FROM User u, Role r WHERE r.roleName = :nameToSearch", User.class)
+                .setParameter("nameToSearch", roleName)
+                .getResultList();
     }
 
     @Nullable
     public User findUserByLogin(String login) {
         try {
-            return manager.createQuery("SELECT u from User u WHERE u.login =:login", User.class)
+            return manager.createQuery("SELECT u from User u WHERE u.login = :login", User.class)
                     .setParameter("login", login)
                     .getSingleResult();
         } catch (NoResultException cause) {

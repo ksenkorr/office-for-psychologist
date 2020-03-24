@@ -36,13 +36,9 @@ public class EmotionalDiaryDAO {
     @Nullable
     public List<EmotionalDiary> findEmotionalDiariesByUser(User user) {
 
-        try {
-            return manager.createQuery("SELECT ed from EmotionalDiary ed, User u WHERE ed.user = :userToSearch")
-                    .setParameter("userToSearch", user)
-                    .getResultList();
-        } catch (NoResultException cause) {
-            return null;
-        }
+        return manager.createQuery("SELECT ed from EmotionalDiary ed, User u WHERE ed.user = :userToSearch")
+                .setParameter("userToSearch", user)
+                .getResultList();
     }
 
 
