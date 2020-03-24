@@ -1,6 +1,7 @@
 package db;
 
 import com.sun.istack.Nullable;
+import model.EmotionalDiary;
 import model.Role;
 import model.User;
 
@@ -16,21 +17,6 @@ public class UserDAO {
     public UserDAO(EntityManager manager) {
         Objects.requireNonNull(manager, "Entity manager shouldn't be null");
         this.manager = manager;
-    }
-
-    public Role createRole(String roleName) {
-
-        Role role = new Role("Role-1");
-        manager.getTransaction().begin();
-        try {
-            manager.persist(role);
-        } catch (Throwable cause) {
-            manager.getTransaction().rollback();
-        }
-
-        manager.getTransaction().commit();
-
-        return role;
     }
 
     public User createUser(String firstName, String middleName, String lastName, String nameAconym, Role role , String login, String password) {
@@ -75,7 +61,5 @@ public class UserDAO {
 
 
     }
-
-
 
 }

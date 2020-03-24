@@ -17,7 +17,8 @@ public class EmotionalDiary {
     private int id;
 
     @Column(nullable = false)
-    private Date dairyTime;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dairyTime = new Date();
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
@@ -26,4 +27,8 @@ public class EmotionalDiary {
     @Column(nullable = false, length = 1000)
     private String comment;
 
+    public EmotionalDiary(User user, String comment) {
+        this.user = user;
+        this.comment = comment;
+    }
 }

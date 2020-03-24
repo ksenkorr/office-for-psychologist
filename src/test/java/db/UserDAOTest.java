@@ -9,7 +9,6 @@ import org.junit.Test;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.PersistenceException;
 
 import java.util.List;
 
@@ -40,30 +39,6 @@ public class UserDAOTest {
     }
 
     @Test
-    public void createRole() {
-        Role role = userDAO.createRole("Role-1");
-        assertNotNull(role);
-        assertEquals("Role-1", role.getRoleName());
-        assertNotEquals(0, role.getId());
-
-        Role foundRoleById = manager.find(Role.class, role.getId());
-        manager.refresh(foundRoleById);
-    }
-
-    @Test
-    public void createRoleDuplicate() {
-        Role role = userDAO.createRole("Role-2");
-        assertNotNull(role);
-
-        try {
-            userDAO.createRole("Role-2");
-            fail("Role creation with the same name should fail");
-        } catch (PersistenceException e) {
-        }
-
-    }
-
-    @Test
     public void createUser() {
         Role role = new Role("Role-3");
         manager.getTransaction().begin();
@@ -87,12 +62,16 @@ public class UserDAOTest {
     public void findUsersByRoleName() {
 
         Role role = new Role ("Role-5");
+        User user1 = new User("First-3", "Middle-3", "Last-3", "FML3");
+        User user2 = new User("First-4", "Middle-4", "Last-4", "FML4");
+        user1.setRole(role);
+        user2.setRole(role);
+
         manager.getTransaction().begin();
         manager.persist(role);
+        manager.persist(user1);
+        manager.persist(user2);
         manager.getTransaction().commit();
-
-        User user1 = userDAO.createUser("First-3", "Middle-3", "Last-3", "FML3",role, "login-3", "password-3");
-        User user2 = userDAO.createUser("First-4", "Middle-4", "Last-4", "FML4",role, "login-4", "password-4");
 
         List<User> foundUsers = userDAO.findUsersByRoleName("Role-5");
         assertNotNull(foundUsers);
@@ -106,17 +85,21 @@ public class UserDAOTest {
 
     @Test
     public void findUserByLogin() {
-        Role role = new Role("Role-4");
+        Role role = new Role("Role-2");
+        User user = new User("First-2", "Middle-2", "Last-2", "FML2");
+        user.setRole(role);
+        user.setLogin("login-2");
+
         manager.getTransaction().begin();
         manager.persist(role);
+        manager.persist(user);
         manager.getTransaction().commit();
-
-        User user = userDAO.createUser("First-2", "Middle-2", "Last-2", "FML2",role, "login-2", "password-2");
 
         User foundUser = userDAO.findUserByLogin("login-2");
         assertNotNull(foundUser);
         assertEquals("login-2", foundUser.getLogin());
-        assertEquals("Role-4", foundUser.getRole().getRoleName());
+        assertEquals("Role-2", foundUser.getRole().getRoleName());
 
     }
+
 }
