@@ -1,8 +1,10 @@
 package db;
 
 import model.Role;
+import model.User;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import java.util.Objects;
 
 public class RoleDAO {
@@ -27,6 +29,16 @@ public class RoleDAO {
         manager.getTransaction().commit();
 
         return role;
+    }
+
+    public Role findRoleByName(String name) {
+        try {
+            return manager.createQuery("SELECT r from Role r WHERE r.roleName = :roleName", Role.class)
+                    .setParameter("roleName", name)
+                    .getSingleResult();
+        } catch (NoResultException cause) {
+            return null;
+        }
     }
 
 

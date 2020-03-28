@@ -21,10 +21,10 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (req.getSession().getAttribute("verifiedUserName") != null) {
+      /*  if (req.getSession().getAttribute("verifiedUserName") != null) {
             resp.sendRedirect(req.getContextPath());
             return;
-        }
+        }*/
 
         String username = req.getParameter("enteredUsername");
         String password = req.getParameter("enteredPassword");
@@ -43,7 +43,9 @@ public class LoginServlet extends HttpServlet {
 
         if (user != null && password != null && password.equals(user.getPassword())) {
             req.getSession().setAttribute("verifiedUserName", username);
-            resp.sendRedirect(req.getContextPath());
+            req.getSession().setAttribute("verifiedUserFMLName", user.getFirstName() + " " + user.getMiddleName() + " " + user.getLastName());
+           // resp.sendRedirect(req.getContextPath()); // to index, i.e. root
+            resp.sendRedirect("psychologistMenu");
         } else {
             resp.sendRedirect("login?username=" + username);
         }

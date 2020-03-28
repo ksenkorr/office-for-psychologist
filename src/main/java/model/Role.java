@@ -15,7 +15,7 @@ public class Role {
     @GeneratedValue
     private int id;
 
-    @Column(name = "role_name",nullable = false, unique = true, length = 30)
+    @Column(name = "role_name",nullable = false, unique = true, length = 100)
     private String roleName;
 
     @OneToMany(mappedBy = "role",fetch = FetchType.LAZY)

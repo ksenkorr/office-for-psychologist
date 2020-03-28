@@ -15,22 +15,22 @@ public class User {
     @GeneratedValue
     private int id;
 
-    @Column(name = "first_name",nullable = false, length = 20)
+    @Column(name = "first_name",nullable = false, length = 100)
     private String firstName;
 
-    @Column(name = "middle_name",nullable = false, length = 20)
+    @Column(name = "middle_name",nullable = false, length = 100)
     private String middleName;
 
-    @Column(name = "last_name",nullable = false, length = 40)
+    @Column(name = "last_name",nullable = false, length = 100)
     private String lastName;
 
-    @Column(name = "name_acronym",nullable = false, unique = true, length = 10)
+    @Column(name = "name_acronym",nullable = false, unique = true, length = 20)
     private String nameAcronym;
 
-    @Column(length = 20, unique = true)
+    @Column(length = 50, unique = true)
     private String login;
 
-    @Column(length = 20)
+    @Column(length = 50)
     private String password;
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)

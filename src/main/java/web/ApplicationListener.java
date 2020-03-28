@@ -1,5 +1,6 @@
 package web;
 
+import com.sun.xml.internal.ws.api.model.wsdl.WSDLOutput;
 import db.RoleDAO;
 import db.UserDAO;
 import model.Role;
@@ -24,14 +25,18 @@ public class ApplicationListener implements ServletContextListener {
         UserDAO userDAO = new UserDAO(manager);
         RoleDAO roleDAO = new RoleDAO(manager);
 
-        if (userDAO.findUserByLogin("admin") == null) {
 
+        if (userDAO.findUserByLogin("admin") == null && roleDAO.findRoleByName("Психолог") == null && roleDAO.findRoleByName("Пациент") == null) {
+
+            System.out.println("test");
+
+            userDAO.createUser("Андрей", "Андреевич", "Андреев", "ААА", roleDAO.createRole("Психолог"), "admin", "admin");
             roleDAO.createRole("Пациент");
-            Role role = roleDAO.createRole("Пcихолог");
 
-            userDAO.createUser("Андрей", "Андреевич", "Андреев", "ААА", role, "admin", "admin");
-
+        } else {
+            System.out.println("test1");
         }
+
 
     }
 
