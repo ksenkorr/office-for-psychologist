@@ -6,15 +6,37 @@
 <head>
     <title>Список пациентов</title>
 </head>
-<body>
 
 <h3>Список пациентов</h3>
 
-<c:forEach items="${patients}" var="patient">
-    <p>${patient.firstName} ${patient.middleName} ${patient.lastName} ${patient.nameAcronym}</p>
-</c:forEach>
+<c:set var="number" value="0" scope="page" />
 
-<a href="patientMenu">Возврат в меню</a>
+<table frame="hsides" cellspacing="15">
+    <tr>
+        <th>#</th>
+        <th>Имя</th>
+        <th>Отчество</th>
+        <th>Фамилия</th>
+        <th>Сокращение</th>
+        <th>Изменить данные</th>
+        <th>Вывести записи пациента</th>
+    </tr>
+    <c:forEach items="${patients}" var="patient">
+
+    <tr>
+        <c:set var="number" value="${number + 1}" scope="page"/>
+        <td>${number}</td>
+        <td>${patient.firstName}</td>
+        <td>${patient.middleName}</td>
+        <td>${patient.lastName}</td>
+        <td>${patient.nameAcronym}</td>
+        <td><input type="submit" formaction=""  value="Изменить"></td>
+        <td><input type="submit" formaction=""  value="Вывести"></td>
+    </tr>
+    </c:forEach>
+</table>
+
+<p><a href="patientMenu">Возврат в меню</a></p>
 
 </body>
 </html>
