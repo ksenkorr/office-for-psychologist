@@ -27,26 +27,29 @@ public class RegistrationServlet extends HttpServlet {
         String middleName = req.getParameter("enteredMiddleName");
         String lastName = req.getParameter("enteredLastName");
         String acronym = req.getParameter("enteredAcronym");
-        String login = req.getParameter("enteredUsername");
+        String login = req.getParameter("enteredUserName");
         String password = req.getParameter("enteredPassword");
 
         EntityManager manager = PersistenceUtils.createManager(req.getServletContext());
         UserDAO userDAO = new UserDAO(manager);
-        User user;
+
 
         try {
-            user = userDAO.createUser(firstName, middleName, lastName, acronym, new RoleDAO(manager).findRoleByName("Пациент"), login, password);
+            userDAO.createUser(firstName, middleName, lastName, acronym, new RoleDAO(manager).findRoleByName("Пациент"), login, password);
+            if (userDAO.findUserByLogin(login) != null) {
+
+                req.setAttribute("userCreated", login );
+                System.out.println("findUserByLogin");
+                System.out.println(req.getAttribute("userCreated"));
+           }
         } finally {
             manager.close();
         }
 
-        //resp.sendRedirect(req.getContextPath() + "/login?username=" +  login);
 
-        if (userDAO.findUserByLogin(login) != null) {
-            req.setAttribute("IsUserCreated", "yes");
-            //req.getSession().setAttribute("IsUserCreated", "yes");
-            resp.sendRedirect("register?firstName=" + firstName+"&middleName=" + middleName + "&lastName=" + lastName + "&acronym=" + acronym + "&username=" + login);
-        }
+        resp.sendRedirect("register?firstName=" + firstName +"&middleName=" + middleName + "&lastName=" + lastName + "&acronym=" + acronym + "&username=" + login);
+
+
 
     }
 }
