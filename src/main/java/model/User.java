@@ -1,6 +1,7 @@
 package model;
 
 import lombok.*;
+import web.PsychologistMenuServlet;
 
 import javax.persistence.*;
 import java.util.List;
@@ -37,6 +38,8 @@ public class User {
     @JoinColumn(name = "role_id")
     private Role role;
 
+    private final static String PSYCHOLOGIST = "Психолог";
+
     @OneToMany(mappedBy = "user")
     private List<EmotionalDiary> emotionalDiaries;
 
@@ -45,5 +48,17 @@ public class User {
         this.middleName = middleName;
         this.lastName = lastName;
         this.nameAcronym = nameAcronym;
+    }
+
+    public boolean isPsychologist() {
+        if (role == null) {
+            return false;
+        }
+        if (role.getRoleName().equals(PSYCHOLOGIST)) {
+            return true;
+        }
+
+        return false;
+
     }
 }

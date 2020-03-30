@@ -1,5 +1,6 @@
 package web;
 
+import db.RoleDAO;
 import db.UserDAO;
 import model.User;
 
@@ -31,8 +32,10 @@ public class LoginServlet extends HttpServlet {
 
         EntityManager manager = PersistenceUtils.createManager(req.getServletContext());
         UserDAO userDAO = new UserDAO(manager);
+        RoleDAO roleDAO = new RoleDAO(manager);
 
         User user = null;
+
         try {
             if (username != null) {
                 user = userDAO.findUserByLogin(username);
@@ -45,7 +48,13 @@ public class LoginServlet extends HttpServlet {
             req.getSession().setAttribute("verifiedUserName", username);
             req.getSession().setAttribute("verifiedUserFMLName", user.getFirstName() + " " + user.getMiddleName() + " " + user.getLastName());
            // resp.sendRedirect(req.getContextPath()); // to index, i.e. root
-            resp.sendRedirect("psychologistMenu");
+
+            if (user.isPsychologist()) {
+                resp.sendRedirect("psychologistMenu");
+            } else {
+                resp.sendRedirect("patientMenu");
+            }
+
         } else {
             resp.sendRedirect("login?username=" + username);
         }

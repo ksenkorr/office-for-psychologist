@@ -45,11 +45,12 @@ public class RegistrationServlet extends HttpServlet {
         } finally {
             manager.close();
         }
-
-
-        resp.sendRedirect("register?firstName=" + firstName +"&middleName=" + middleName + "&lastName=" + lastName + "&acronym=" + acronym + "&username=" + login);
-
-
+        req.getRequestDispatcher("/pages/register.jsp?firstName=" + firstName +
+                "&middleName=" + middleName +
+                "&lastName=" + lastName +
+                "&acronym=" + acronym +
+                "&username=" + login)
+                .forward(req, resp);
 
     }
 }

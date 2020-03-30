@@ -26,17 +26,12 @@ public class ApplicationListener implements ServletContextListener {
         RoleDAO roleDAO = new RoleDAO(manager);
 
 
-        if (userDAO.findUserByLogin("admin") == null && roleDAO.findRoleByName("Психолог") == null && roleDAO.findRoleByName("Пациент") == null) {
-
-            System.out.println("test");
+        if (userDAO.findUserByLogin("admin") == null && roleDAO.findRoleByName("Психолог") == null && userDAO.findUserByLogin("patient") == null && roleDAO.findRoleByName("Пациент") == null) {
 
             userDAO.createUser("Андрей", "Андреевич", "Андреев", "ААА", roleDAO.createRole("Психолог"), "admin", "admin");
-            roleDAO.createRole("Пациент");
+            userDAO.createUser("Иван", "Иванович", "Иванов", "ИИИ", roleDAO.createRole("Пациент"), "patient", "patient");
 
-        } else {
-            System.out.println("test1");
         }
-
 
     }
 
