@@ -38,7 +38,6 @@ public class UserDAO {
         return user;
     }
 
-    @Nullable
     public List<User> findUsersByRoleName(String roleName) {
         return manager.createQuery("SELECT u FROM User u, Role r WHERE r.roleName = :nameToSearch", User.class)
                 .setParameter("nameToSearch", roleName)
@@ -54,7 +53,14 @@ public class UserDAO {
         } catch (NoResultException cause) {
             return null;
         }
-
     }
+
+    public List<User> findAllPatients() {
+
+        return manager.createQuery("SELECT u FROM User u, Role r WHERE r.roleName = :nameToSearch", User.class)
+                .setParameter("nameToSearch", Role.PATIENT)
+                .getResultList();
+    }
+
 
 }

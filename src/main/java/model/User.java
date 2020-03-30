@@ -38,8 +38,6 @@ public class User {
     @JoinColumn(name = "role_id")
     private Role role;
 
-    private final static String PSYCHOLOGIST = "Психолог";
-
     @OneToMany(mappedBy = "user")
     private List<EmotionalDiary> emotionalDiaries;
 
@@ -54,7 +52,7 @@ public class User {
         if (role == null) {
             return false;
         }
-        if (role.getRoleName().equals(PSYCHOLOGIST)) {
+        if (role.getRoleName().equals(Role.PSYCHOLOGIST)) {
             return true;
         }
 

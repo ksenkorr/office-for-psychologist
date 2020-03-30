@@ -21,6 +21,9 @@ public class Role {
     @OneToMany(mappedBy = "role",fetch = FetchType.LAZY)
     private List<User> users;
 
+    public final static String PSYCHOLOGIST = "Психолог";
+    public final static String PATIENT = "Пациент";
+
     public Role(String roleName) {
         this.roleName = roleName;
     }
