@@ -1,33 +1,24 @@
 package db;
 
 import model.Role;
-import model.User;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
 import java.util.Objects;
 
+@Repository
 public class RoleDAO {
 
+    @PersistenceContext
     private EntityManager manager;
 
-    public RoleDAO(EntityManager manager) {
-        Objects.requireNonNull(manager, "Entity manager shouldn't be null");
-        this.manager = manager;
-    }
-
+    @Transactional
     public Role createRole(String roleName) {
-
         Role role = new Role(roleName);
-        manager.getTransaction().begin();
-        try {
-            manager.persist(role);
-        } catch (Throwable cause) {
-            manager.getTransaction().rollback();
-        }
-
-        manager.getTransaction().commit();
-
+        manager.persist(role);
         return role;
     }
 

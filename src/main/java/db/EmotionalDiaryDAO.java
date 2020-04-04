@@ -3,32 +3,24 @@ package db;
 import com.sun.istack.Nullable;
 import model.EmotionalDiary;
 import model.User;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.Objects;
 
+@Repository
 public class EmotionalDiaryDAO {
 
+    @PersistenceContext
     private EntityManager manager;
 
-    public EmotionalDiaryDAO(EntityManager manager) {
-        Objects.requireNonNull(manager, "Entity manager shouldn't be null");
-        this.manager = manager;
-    }
-
+    @Transactional
     public EmotionalDiary createEmotionalDiary(User user, String comment) {
-
         EmotionalDiary ed = new EmotionalDiary(user, comment);
-        manager.getTransaction().begin();
-        try {
-            manager.persist(ed);
-        } catch (Throwable cause) {
-            manager.getTransaction().rollback();
-        }
-        manager.getTransaction().commit();
-
+        manager.persist(ed);
         return ed;
     }
 
@@ -36,7 +28,7 @@ public class EmotionalDiaryDAO {
     @Nullable
     public List<EmotionalDiary> findEmotionalDiariesByUser(User user) {
 
-        return manager.createQuery("SELECT ed from EmotionalDiary ed, User u WHERE ed.user = :userToSearch")
+        return manager.createQuery("SELECT ed from EmotionalDiary ed, User u WHERE ed.user = :userToSearch", EmotionalDiary.class)
                 .setParameter("userToSearch", user)
                 .getResultList();
     }

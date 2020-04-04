@@ -1,39 +1,29 @@
 package db;
 
 import model.Role;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
+import web.TestConfiguration;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.PersistenceException;
+import javax.persistence.*;
 
 import static org.junit.Assert.*;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = TestConfiguration.class)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class RoleDAOTest {
 
-    private EntityManagerFactory factory;
+    @PersistenceContext
     private EntityManager manager;
+
+    @Autowired
     private RoleDAO roleDAO;
-
-    @Before
-    public void connect() throws Exception {
-        factory = Persistence.createEntityManagerFactory("TestPersistenceUnit");
-        manager = factory.createEntityManager();
-        roleDAO = new RoleDAO(manager);
-    }
-
-    @After
-    public void close() throws Exception {
-        if (manager != null) {
-            manager.close();
-        }
-        if (factory != null) {
-            factory.close();
-        }
-    }
 
     @Test
     public void createRole() {
@@ -43,9 +33,10 @@ public class RoleDAOTest {
         assertNotEquals(0, role.getId());
 
         Role foundRoleById = manager.find(Role.class, role.getId());
-        manager.refresh(foundRoleById);
+      //  manager.refresh(foundRoleById);
     }
 
+    @Transactional
     @Test
     public void createRoleDuplicate() {
         Role role = roleDAO.createRole("Role-2");

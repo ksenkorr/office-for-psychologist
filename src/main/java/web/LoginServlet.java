@@ -14,6 +14,7 @@ import java.io.IOException;
 
 @WebServlet(urlPatterns = {"/login"})
 public class LoginServlet extends HttpServlet {
+/*
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -22,10 +23,10 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-      /*  if (req.getSession().getAttribute("verifiedUserName") != null) {
-            resp.sendRedirect(req.getContextPath());
-            return;
-        }*/
+      // if (req.getSession().getAttribute("verifiedUserName") != null) {
+        //    resp.sendRedirect(req.getContextPath());
+          //  return;
+        //}
 
         String username = req.getParameter("enteredUsername");
         String password = req.getParameter("enteredPassword");
@@ -59,6 +60,6 @@ public class LoginServlet extends HttpServlet {
             resp.sendRedirect("login?username=" + username);
         }
     }
-
+*/
 
 }

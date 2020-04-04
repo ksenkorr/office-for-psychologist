@@ -2,7 +2,6 @@ package web;
 
 import db.RoleDAO;
 import db.UserDAO;
-import model.User;
 
 import javax.persistence.EntityManager;
 import javax.servlet.ServletException;
@@ -14,7 +13,7 @@ import java.io.IOException;
 
 @WebServlet(urlPatterns = "/register")
 public class RegistrationServlet extends HttpServlet {
-
+/*
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher("/pages/register.jsp").forward(req, resp);
@@ -55,4 +54,6 @@ public class RegistrationServlet extends HttpServlet {
                 .forward(req, resp);
 
     }
+
+ */
 }

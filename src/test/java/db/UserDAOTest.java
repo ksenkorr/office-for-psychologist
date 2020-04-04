@@ -2,48 +2,38 @@ package db;
 
 import model.Role;
 import model.User;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
+import web.TestConfiguration;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import javax.persistence.PersistenceContext;
 
 import java.util.List;
 
 import static org.junit.Assert.*;
 
-
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = TestConfiguration.class)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class UserDAOTest {
 
-    private EntityManagerFactory factory;
+    @PersistenceContext
     private EntityManager manager;
+
+    @Autowired
     private UserDAO userDAO;
 
-    @Before
-    public void connect() throws Exception {
-        factory = Persistence.createEntityManagerFactory("TestPersistenceUnit");
-        manager = factory.createEntityManager();
-        userDAO = new UserDAO(manager);
-    }
-
-    @After
-    public void close() throws Exception {
-        if (manager != null) {
-            manager.close();
-        }
-        if (factory != null) {
-            factory.close();
-        }
-    }
-
+    @Transactional
     @Test
     public void createUser() {
         Role role = new Role("Role-3");
-        manager.getTransaction().begin();
         manager.persist(role);
-        manager.getTransaction().commit();
 
         User user = userDAO.createUser("First-1", "Middle-1", "Last-1", "FML1",role, "login-1", "password-1");
 
@@ -58,20 +48,21 @@ public class UserDAOTest {
         manager.refresh(foundUser);
     }
 
+    @Transactional
     @Test
     public void findUsersByRoleName() {
 
         Role role = new Role ("Role-5");
+
         User user1 = new User("First-3", "Middle-3", "Last-3", "FML3");
         User user2 = new User("First-4", "Middle-4", "Last-4", "FML4");
+
         user1.setRole(role);
         user2.setRole(role);
 
-        manager.getTransaction().begin();
         manager.persist(role);
         manager.persist(user1);
         manager.persist(user2);
-        manager.getTransaction().commit();
 
         List<User> foundUsers = userDAO.findUsersByRoleName("Role-5");
         assertNotNull(foundUsers);
@@ -83,6 +74,7 @@ public class UserDAOTest {
 
     }
 
+    @Transactional
     @Test
     public void findUserByLogin() {
         Role role = new Role("Role-2");
@@ -90,10 +82,8 @@ public class UserDAOTest {
         user.setRole(role);
         user.setLogin("login-2");
 
-        manager.getTransaction().begin();
         manager.persist(role);
         manager.persist(user);
-        manager.getTransaction().commit();
 
         User foundUser = userDAO.findUserByLogin("login-2");
         assertNotNull(foundUser);

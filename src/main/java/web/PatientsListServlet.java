@@ -15,6 +15,7 @@ import java.util.List;
 @WebServlet(urlPatterns = "/patientsList")
 public class PatientsListServlet extends HttpServlet {
 
+    /*
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -33,6 +34,6 @@ public class PatientsListServlet extends HttpServlet {
     }
 
 
-
+*/
 
 }

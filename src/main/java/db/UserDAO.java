@@ -1,40 +1,30 @@
 package db;
 
 import com.sun.istack.Nullable;
-import model.EmotionalDiary;
 import model.Role;
 import model.User;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.Objects;
 
+@Repository
 public class UserDAO {
 
+    @PersistenceContext
     private EntityManager manager;
 
-    public UserDAO(EntityManager manager) {
-        Objects.requireNonNull(manager, "Entity manager shouldn't be null");
-        this.manager = manager;
-    }
-
+    @Transactional
     public User createUser(String firstName, String middleName, String lastName, String nameAconym, Role role , String login, String password) {
         User user = new User(firstName, middleName, lastName, nameAconym);
         user.setRole(role);
         user.setLogin(login);
         user.setPassword(password);
-
-        manager.getTransaction().begin();
-        try {
-            manager.persist(user);
-        } catch (Throwable cause) {
-            manager.getTransaction().rollback();
-            throw cause;
-        }
-
-        manager.getTransaction().commit();
-
+        manager.persist(user);
         return user;
     }
 
