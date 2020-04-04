@@ -8,6 +8,6 @@ public class PatientMenuController{
 
     @GetMapping(path = "/patientMenu")
     public String showPatientMenu() {
-        return "/patientMenu";
+        return "patientMenu";
     }
 }

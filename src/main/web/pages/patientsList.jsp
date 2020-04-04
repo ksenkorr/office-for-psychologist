@@ -36,7 +36,7 @@
     </c:forEach>
 </table>
 
-<p><a href="patientMenu">Возврат в меню</a></p>
+<p><a href="psychologistMenu">Возврат в меню</a></p>
 
 </body>
 </html>
