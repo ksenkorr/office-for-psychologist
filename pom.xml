@@ -87,17 +87,23 @@
             <version>${spring.version}</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
+        <dependency> <!-- library for Spring Transaction Manager -->
             <groupId>org.springframework</groupId>
             <artifactId>spring-orm</artifactId>
             <version>${spring.version}</version>
         </dependency>
-        <dependency>
+        <dependency> <!-- library for Web -->
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
             <version>${spring.version}</version>
         </dependency>
-        
+
+        <dependency> <!-- library for validating web form fields and entities fields -->
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>6.1.2.Final</version>
+        </dependency>
+
 
     </dependencies>
 
