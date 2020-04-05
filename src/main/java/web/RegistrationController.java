@@ -3,6 +3,7 @@ package web;
 import db.RoleDAO;
 import db.UserDAO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,21 +41,23 @@ public class RegistrationController {
                                           @RequestParam("enteredUserName") String login,
                                           @RequestParam("enteredPassword") String password,
                                           ModelMap model)  {
-        //req.setCharacterEncoding("UTF-8");
 
             userDAO.createUser(firstName, middleName, lastName, acronym, roleDAO.findRoleByName("Пациент"), login, password);
             if (userDAO.findUserByLogin(login) != null) {
 
-                model.addAttribute("userCreated", login );
+                model.addAttribute("userCreated", login);
                 System.out.println("findUserByLogin");
                 System.out.println(model.getAttribute("userCreated"));
            }
 
-        return "/register?firstName=" + firstName +
+            return "register";
+
+            // TODO: load the page with filled fields after registering, currently it does not work
+        /*return "register?firstName=" + firstName +
                 "&middleName=" + middleName +
                 "&lastName=" + lastName +
                 "&acronym=" + acronym +
-                "&username=" + login;
+                "&username=" + login;*/
 
     }
 

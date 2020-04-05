@@ -40,19 +40,12 @@ public class LoginController  {
     public String processLoginForm(HttpSession session,
                                    @RequestParam("enteredUsername") String username,
                                    @RequestParam("enteredPassword") String password)  {
-      // if (req.getSession().getAttribute("verifiedUserName") != null) {
-        //    resp.sendRedirect(req.getContextPath());
-          //  return;
-        //}
-
 
         User user = userDAO.findUserByLogin(username);
-
 
         if (user != null && password != null && password.equals(user.getPassword())) {
             session.setAttribute(VERIFIED_USER_NAME_ATTRIBUTE, username);
             session.setAttribute(VERIFIED_USER_FML_NAME_ATTRIBUTE, user.getFirstName() + " " + user.getMiddleName() + " " + user.getLastName());
-           // resp.sendRedirect(req.getContextPath()); // to index, i.e. root
 
             if (user.isPsychologist()) {
                 return "psychologistMenu";
