@@ -45,6 +45,20 @@ public class UserDAO {
         }
     }
 
+
+    @Nullable
+    public User findUserByAcronym(String acronym) {
+        try {
+            return manager.createQuery("SELECT u from User u WHERE u.nameAcronym = :acronymToSearch", User.class)
+                    .setParameter("acronymToSearch", acronym)
+                    .getSingleResult();
+        } catch (NoResultException cause) {
+            return null;
+        }
+    }
+
+
+
     public List<User> findAllPatients() {
 
         return manager.createQuery("SELECT u FROM User u, Role r WHERE r.roleName = :nameToSearch", User.class)
