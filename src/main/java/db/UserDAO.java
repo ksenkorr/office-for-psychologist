@@ -61,7 +61,9 @@ public class UserDAO {
 
     public List<User> findAllPatients() {
 
-        return manager.createQuery("SELECT u FROM User u, Role r WHERE r.roleName = :nameToSearch", User.class)
+        return manager.createQuery("SELECT u FROM User u, Role r " +
+                "WHERE u.role.id= r.id AND " +
+                "r.roleName = :nameToSearch", User.class)
                 .setParameter("nameToSearch", Role.PATIENT)
                 .getResultList();
     }

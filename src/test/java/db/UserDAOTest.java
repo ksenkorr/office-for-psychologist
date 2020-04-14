@@ -92,4 +92,20 @@ public class UserDAOTest {
 
     }
 
+    @Test
+    public void findAllPatients() {
+
+      /*  Role role = new Role("Role-А");
+        User user1 = new User("First", "Middle", "Last", "FML");
+        User user2 = new User("First1", "Middle1", "Last1", "FML1");
+        user1.setRole(role);
+        user2.setRole(role);
+
+        manager.persist(role);
+        manager.persist(user1);
+        manager.persist(user2);
+
+        List<User> users = userDAO.findAllPatients()*/
+
+    }
 }
