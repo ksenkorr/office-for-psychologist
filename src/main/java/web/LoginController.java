@@ -2,6 +2,7 @@ package web;
 
 import db.RoleDAO;
 import db.UserDAO;
+import db.UserRepository;
 import model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,10 +20,8 @@ public class LoginController  {
     public static final String VERIFIED_USER_FML_NAME_ATTRIBUTE = "verifiedUserFMLName";
 
     @Autowired
-    private UserDAO userDAO;
-
-    @Autowired
-    private RoleDAO roleDAO;
+    //private UserDAO userDAO;
+    private UserRepository userRepository;
 
     @GetMapping(path = "/login")
     public String loadLoginForm(@RequestParam(required = false) String login,
@@ -41,7 +40,8 @@ public class LoginController  {
                                    @RequestParam("enteredUsername") String username,
                                    @RequestParam("enteredPassword") String password)  {
 
-        User user = userDAO.findUserByLogin(username);
+        User user = userRepository.findByLogin(username);
+                //userDAO.findUserByLogin(username);
 
         if (user != null && password != null && password.equals(user.getPassword())) {
             session.setAttribute(VERIFIED_USER_NAME_ATTRIBUTE, username);

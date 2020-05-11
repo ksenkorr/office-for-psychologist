@@ -1,6 +1,8 @@
 package web;
 
 import db.UserDAO;
+import db.UserRepository;
+import model.Role;
 import model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,12 +16,13 @@ import java.util.List;
 public class PatientsListController {
 
     @Autowired
-    private UserDAO userDAO;
+    private UserRepository userRepository;
+
 
    @GetMapping(path = "/patientsList")
     public String showAllPatients(ModelMap model) {
 
-        List<User> patients = userDAO.findAllPatients();
+        List<User> patients = userRepository.findAllByRoleRoleName(Role.PATIENT);
 
         model.addAttribute("patients", patients);
 

@@ -1,7 +1,9 @@
 package web;
 
 import db.EmotionalDiaryDAO;
+import db.EmotionalDiaryRepository;
 import db.UserDAO;
+import db.UserRepository;
 import model.EmotionalDiary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,10 +16,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class CreateEmotionalDiaryController {
 
     @Autowired
-    private UserDAO userDAO;
+    //private UserDAO userDAO;
+    private UserRepository userRepository;
 
     @Autowired
-    private EmotionalDiaryDAO edDAO;
+    //private EmotionalDiaryDAO edDAO;
+    private EmotionalDiaryRepository edRepository;
 
     @GetMapping(path = "/createEmotionalDiary")
     public String getCreateEmotionalDiaryForm() {
@@ -31,7 +35,9 @@ public class CreateEmotionalDiaryController {
     public String processCreateEmotionalDiary(ModelMap model,
                                               @RequestParam("diary") String diary) {
 
-        edDAO.createEmotionalDiary(userDAO.findUserByLogin(LoginController.VERIFIED_USER_NAME_ATTRIBUTE), diary);
+        EmotionalDiary ed = new EmotionalDiary(userRepository.findByLogin(LoginController.VERIFIED_USER_NAME_ATTRIBUTE), diary);
+        edRepository.save(ed);
+       // edDAO.createEmotionalDiary(userDAO.findUserByLogin(LoginController.VERIFIED_USER_NAME_ATTRIBUTE), diary);
 
         model.addAttribute("diaryCreated", "yes");
 

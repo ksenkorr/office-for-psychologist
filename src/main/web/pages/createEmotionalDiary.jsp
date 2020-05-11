@@ -23,7 +23,7 @@
 
 </c:if>
 
-<a href="psychologistMenu">Возврат в меню</a>
+<a href="patientMenu">Возврат в меню</a>
 
 </body>
 </html>

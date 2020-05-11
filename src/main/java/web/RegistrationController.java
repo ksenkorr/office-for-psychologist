@@ -1,7 +1,11 @@
 package web;
 
 import db.RoleDAO;
+import db.RoleRepository;
 import db.UserDAO;
+import db.UserRepository;
+import model.Role;
+import model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -16,10 +20,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class RegistrationController {
 
     @Autowired
-    private UserDAO userDAO;
+    private UserRepository userRepository;
 
     @Autowired
-    private RoleDAO roleDAO;
+    private RoleRepository roleRepository;
 
     @ModelAttribute("form")
     public RegistrationForm createForm() {
@@ -51,25 +55,30 @@ public class RegistrationController {
 
 
         try {
-            userDAO.createUser(form.getFirstName(),
-                                form.getMiddleName(),
-                                form.getLastName(),
-                                form.getAcronym(),
-                                roleDAO.findRoleByName("Пациент"),
-                                form.getLogin(),
-                                form.getPassword());
+
+           User user = new User(form.getFirstName(),
+                   form.getMiddleName(),
+                   form.getLastName(),
+                   form.getAcronym());
+           user.setRole(roleRepository.findByRoleName(Role.PATIENT));
+           user.setLogin(form.getLogin());
+           user.setPassword(form.getPassword());
+
+           userRepository.save(user);
+
+
         } catch (Throwable cause) {
 
             // TODO: how to not clear login and acronym fields after showing a message
 
-            if (userDAO.findUserByLogin(form.getLogin()) != null) {
+            if (userRepository.existsByLogin(form.getLogin())) {
                 validationResult.addError(
                         new FieldError("form", "login",
                                 "Пользователь с именем " + form.getLogin()
                                         + " уже зарегистрирован"));
             }
 
-            if (userDAO.findUserByAcronym(form.getAcronym()) != null) {
+            if (userRepository.existsByNameAcronym(form.getAcronym())) {
                 validationResult.addError(
                         new FieldError("form", "acronym",
                                 "Сокращенное имя " + form.getAcronym()
@@ -78,12 +87,12 @@ public class RegistrationController {
 
         }
 
-            if (!validationResult.hasErrors() && userDAO.findUserByLogin(form.getLogin()) != null) {
+        if (!validationResult.hasErrors() && userRepository.existsByLogin(form.getLogin())) {
 
-                model.addAttribute("userCreated", form.getLogin());
-                System.out.println("findUserByLogin");
-                System.out.println(model.getAttribute("userCreated"));
-           }
+            model.addAttribute("userCreated", form.getLogin());
+            System.out.println("findUserByLogin");
+            System.out.println(model.getAttribute("userCreated"));
+        }
 
             return "register";
 
