@@ -1,5 +1,6 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
@@ -18,6 +19,7 @@ public class Role {
     @Column(name = "role_name",nullable = false, unique = true, length = 100)
     private String roleName;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "role",fetch = FetchType.LAZY)
     private List<User> users;
 

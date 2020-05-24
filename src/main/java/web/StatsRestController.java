@@ -1,7 +1,9 @@
 package web;
 
+import db.EmotionalDiaryRepository;
 import db.UserDAO;
 import db.UserRepository;
+import model.EmotionalDiary;
 import model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,10 +13,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-public class MyRestController {
+public class StatsRestController {
 
-   /* @Autowired
+  @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private EmotionalDiaryRepository edRepository;
 
     @GetMapping("/api/users")
     public List<User> findUsers() {
@@ -24,7 +29,23 @@ public class MyRestController {
         }
 
         return allUsers;
-    }*/
+    }
+
+
+   @GetMapping("api/emotional-diaries")
+   public List<EmotionalDiary> findAllEmotionalDiaries() {
+
+        List<EmotionalDiary> diaries = new ArrayList<>();
+        for (EmotionalDiary ed : edRepository.findAll()) {
+            diaries.add(ed);
+        }
+
+        return diaries;
+   }
+
+
+
+
 
 
 }
