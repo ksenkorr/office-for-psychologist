@@ -50,6 +50,7 @@ public class User {
             message = "Только буквы латинского алфавитов, цифры, знаки подчеркивания, дефисы и точки разрешены для ввода")
     private String login;
 
+    @JsonIgnore
     @Column(length = 20)
     @Size(min = 3, max = 20, message = "Имя пользователя должно быть от 3 до 20 символов")
     @Pattern(regexp = "[a-zA-Z-_.0-9]*",

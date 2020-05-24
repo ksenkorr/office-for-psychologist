@@ -13,6 +13,6 @@ public interface EmotionalDiaryRepository extends CrudRepository<EmotionalDiary,
         //PagingAndSortingRepository<EmotionalDiary, Integer> {
 
     List<EmotionalDiary> findEmotionalDiariesByUser(User user);
-    //List<EmotionalDiary> find
 
+    Integer countByUser(User user);
 }

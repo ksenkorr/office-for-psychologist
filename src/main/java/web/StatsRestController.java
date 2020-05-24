@@ -43,6 +43,13 @@ public class StatsRestController {
         return diaries;
    }
 
+   /*@GetMapping("api/emotional-diaries-count")
+   public Long  countEmotionalDiariesPerUser(){
+        userRepository.count()
+
+
+    }*/
+
 
 
 
