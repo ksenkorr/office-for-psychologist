@@ -102,7 +102,7 @@
         <dependency> <!-- library for validating web form fields and entities fields -->
             <groupId>org.hibernate.validator</groupId>
             <artifactId>hibernate-validator</artifactId>
-            <version>6.1.2.Final</version>
+            <version>6.1.5.Final</version>
         </dependency>
 
         <dependency> <!--library for spring repository -->
