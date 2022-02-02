@@ -16,7 +16,7 @@
         <junit.version>4.13</junit.version>
         <spring.version>5.2.5.RELEASE</spring.version>
 
-        <postgresql.version>42.2.5</postgresql.version>
+        <postgresql.version>42.2.25</postgresql.version>
         <lombok.version>1.18.10</lombok.version>
     </properties>
 
